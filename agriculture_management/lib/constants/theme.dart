@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 
 ThemeData themeData = ThemeData(
     scaffoldBackgroundColor: Colors.white,
-    primaryColor: Colors.red,
+    primaryColor: Colors.green,
     outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
-            foregroundColor: Colors.red,
+            foregroundColor: Colors.green,
             textStyle: const TextStyle(
-              color: Colors.red,
+              color: Colors.green,
             ),
-            side: const BorderSide(color: Colors.red, width: 1.7),
-            disabledForegroundColor: Colors.red.withOpacity(0.38))),
+            side: const BorderSide(color: Colors.green, width: 1.7),
+            disabledForegroundColor: Colors.green.withOpacity(0.38))),
     inputDecorationTheme: InputDecorationTheme(
       border: outlineInputBorder,
       errorBorder: outlineInputBorder,
@@ -22,15 +22,15 @@ ThemeData themeData = ThemeData(
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.red,
+        backgroundColor: Colors.green,
         textStyle: const TextStyle(
           fontSize: 18.0,
         ),
         disabledBackgroundColor: Colors.grey,
       ),
     ),
-    primarySwatch: Colors.red,
-    canvasColor: Colors.red,
+    primarySwatch: Colors.green,
+    canvasColor: Colors.green,
     appBarTheme: const AppBarTheme(
         backgroundColor: Colors.white,
         elevation: 0.0,

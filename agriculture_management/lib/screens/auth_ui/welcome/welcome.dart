@@ -19,10 +19,11 @@ class Welcome extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const TopTitles(
-                subtitle: "Buy AnyItems From Using App ", title: "Welcome"),
+                subtitle: "Buy Any Items From Farmers Using this App",
+                title: "Welcome"),
             Center(
               child: Image.asset(
-                AssetsImages.instance.welcomeImage,
+                AssetsImages.instance.farmLogo,
               ),
             ),
             // Row(

@@ -1,5 +1,8 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:agriculture_management/firebase_helper/firebase_auth_services.dart';
+import 'package:agriculture_management/screens/auth_ui/login/login.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:agriculture_management/constants/routes.dart';
@@ -18,13 +21,23 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  bool isShowPassword = true;
-  TextEditingController password = TextEditingController();
-  TextEditingController email = TextEditingController();
+  final FirebaseAuthService _auth = FirebaseAuthService();
 
-  TextEditingController name = TextEditingController();
-  TextEditingController phone = TextEditingController();
+  bool isShowPassword = true;
+  TextEditingController _password = TextEditingController();
+  TextEditingController _email = TextEditingController();
+
+  TextEditingController _name = TextEditingController();
+  TextEditingController _phone = TextEditingController();
   @override
+  void dispose() {
+    _password.dispose();
+    _email.dispose();
+    _name.dispose();
+    _phone.dispose();
+    super.dispose();
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
@@ -40,7 +53,7 @@ class _SignUpState extends State<SignUp> {
                 height: 46.0,
               ),
               TextFormField(
-                controller: name,
+                controller: _name,
                 decoration: const InputDecoration(
                   hintText: "Name",
                   prefixIcon: Icon(
@@ -52,7 +65,7 @@ class _SignUpState extends State<SignUp> {
                 height: 12.0,
               ),
               TextFormField(
-                controller: email,
+                controller: _email,
                 keyboardType: TextInputType.emailAddress,
                 decoration: const InputDecoration(
                   hintText: "E-mail",
@@ -65,7 +78,7 @@ class _SignUpState extends State<SignUp> {
                 height: 12.0,
               ),
               TextFormField(
-                controller: phone,
+                controller: _phone,
                 keyboardType: TextInputType.phone,
                 decoration: const InputDecoration(
                   hintText: "Phone",
@@ -78,7 +91,7 @@ class _SignUpState extends State<SignUp> {
                 height: 12.0,
               ),
               TextFormField(
-                controller: password,
+                controller: _password,
                 obscureText: isShowPassword,
                 decoration: InputDecoration(
                   hintText: "Password",
@@ -103,18 +116,7 @@ class _SignUpState extends State<SignUp> {
               ),
               PrimaryButton(
                 title: "Create an account",
-                // onPressed: () async {
-                //   bool isVaildated = signUpVaildation(
-                //       email.text, password.text, name.text, phone.text);
-                //   if (isVaildated) {
-                //     bool isLogined = await FirebaseAuthHelper.instance
-                //         .signUp(name.text, email.text, password.text, context);
-                //     if (isLogined) {
-                //       Routes.instance.pushAndRemoveUntil(
-                //           widget: const CustomBottomBar(), context: context);
-                //     }
-                //   }
-                // },
+                onPressed: _signUp,
               ),
               const SizedBox(
                 height: 24.0,
@@ -139,5 +141,22 @@ class _SignUpState extends State<SignUp> {
         ),
       ),
     );
+  }
+
+  void _signUp() async {
+    String username = _name.text;
+    String email = _email.text;
+    String phone = _phone.text;
+    String password = _password.text;
+
+    User? user = await _auth.signUpWithEmailandPassword(email, password);
+
+    if (user != null) {
+      print("Sign up successful");
+      FirebaseAuth.instance.signOut();
+      Routes.instance.push(widget: const Login(), context: context);
+    } else {
+      print("Sign up failed");
+    }
   }
 }

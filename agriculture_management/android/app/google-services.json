@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "167517423961",
+    "project_id": "agricultureapp-90cbf",
+    "storage_bucket": "agricultureapp-90cbf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:167517423961:android:b4643f11c4b99a0f446448",
+        "android_client_info": {
+          "package_name": "com.example.agriculture_management"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhghybvpJf91dby0w18Lkkm_MVCvq-jZE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

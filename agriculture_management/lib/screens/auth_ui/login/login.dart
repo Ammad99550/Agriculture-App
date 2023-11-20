@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:agriculture_management/screens/custom_bottom_bar/custom_bottom_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -113,18 +114,58 @@ class _LoginState extends State<Login> {
     );
   }
 
+  void _showCircularProgress() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
+  }
+
   void _signIn() async {
     String email = _email.text;
     String password = _password.text;
 
-    User? user = await _auth.signInWithEmailandPassword(email, password);
+    try {
+      // Show circular progress indicator
+      _showCircularProgress();
 
-    if (user != null) {
-      print("Login successful");
-      // Routes.instance.pushAndRemoveUntil(
-      //                      widget: const CustomBottomBar(), context: context);
-    } else {
-      print("Login failed");
+      User? user = await _auth.signInWithEmailandPassword(email, password);
+
+      if (user != null) {
+        print("Login successful");
+
+        // Delay for a few seconds before hiding the progress indicator
+        await Future.delayed(Duration(seconds: 2));
+
+        // Hide the circular progress indicator
+        Navigator.of(context).pop();
+
+        // Uncomment the navigation part if needed
+        Routes.instance.pushAndRemoveUntil(
+            widget: const CustomBottomBar(), context: context);
+      } else {
+        print("Login failed");
+        _showSnackBar("Incorrect email or password");
+      }
+    } catch (e) {
+      print("Error during login: $e");
+      _showSnackBar("An error occurred. Please try again.");
+
+      // Hide the circular progress indicator in case of an error
+      Navigator.of(context).pop();
     }
+  }
+
+  void _showSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: Duration(seconds: 3),
+      ),
+    );
   }
 }

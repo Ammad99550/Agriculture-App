@@ -1,9 +1,11 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 //import 'package:agriculture_management/constants/constants.dart';
 import 'package:agriculture_management/constants/routes.dart';
+import 'package:agriculture_management/firebase_helper/firebase_auth_services.dart';
 import 'package:agriculture_management/screens/auth_ui/sign_up/sign_up.dart';
 import 'package:agriculture_management/widgets/primary_button/primary_button.dart';
 import 'package:agriculture_management/widgets/top_titles/top_titles.dart';
@@ -16,11 +18,20 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  TextEditingController email = TextEditingController();
-  TextEditingController password = TextEditingController();
+  final FirebaseAuthService _auth = FirebaseAuthService();
+
+  TextEditingController _email = TextEditingController();
+  TextEditingController _password = TextEditingController();
 
   bool isShowPassword = true;
+
   @override
+  void dispose() {
+    _password.dispose();
+    _email.dispose();
+    super.dispose();
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
@@ -35,7 +46,7 @@ class _LoginState extends State<Login> {
                 height: 46.0,
               ),
               TextFormField(
-                controller: email,
+                controller: _email,
                 decoration: const InputDecoration(
                   hintText: "E-mail",
                   prefixIcon: Icon(
@@ -47,7 +58,7 @@ class _LoginState extends State<Login> {
                 height: 12.0,
               ),
               TextFormField(
-                controller: password,
+                controller: _password,
                 obscureText: isShowPassword,
                 decoration: InputDecoration(
                   hintText: "Password",
@@ -74,17 +85,7 @@ class _LoginState extends State<Login> {
               ),
               PrimaryButton(
                 title: "Login",
-                // onPressed: () async {
-                //   bool isVaildated = loginVaildation(email.text, password.text);
-                //   if (isVaildated) {
-                //     bool isLogined = await FirebaseAuthHelper.instance
-                //         .login(email.text, password.text, context);
-                //     if (isLogined) {
-                //       Routes.instance.pushAndRemoveUntil(
-                //           widget: const CustomBottomBar(), context: context);
-                //     }
-                //   }
-                // },
+                onPressed: _signIn,
               ),
               const SizedBox(
                 height: 24.0,
@@ -110,5 +111,20 @@ class _LoginState extends State<Login> {
         ),
       ),
     );
+  }
+
+  void _signIn() async {
+    String email = _email.text;
+    String password = _password.text;
+
+    User? user = await _auth.signInWithEmailandPassword(email, password);
+
+    if (user != null) {
+      print("Login successful");
+      // Routes.instance.pushAndRemoveUntil(
+      //                      widget: const CustomBottomBar(), context: context);
+    } else {
+      print("Login failed");
+    }
   }
 }

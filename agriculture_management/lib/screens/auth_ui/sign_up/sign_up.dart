@@ -143,20 +143,108 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
+  void showLoadingDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
+  }
+
+  void _showSnackbar(String message) {
+    final snackBar = SnackBar(
+      content: Text(message),
+      duration: const Duration(seconds: 3),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
   void _signUp() async {
     String username = _name.text;
     String email = _email.text;
     String phone = _phone.text;
     String password = _password.text;
 
-    User? user = await _auth.signUpWithEmailandPassword(email, password);
+    if (_name.text.isEmpty) {
+      _showSnackbar("Please enter your name");
+      return;
+    }
 
-    if (user != null) {
-      print("Sign up successful");
-      FirebaseAuth.instance.signOut();
-      Routes.instance.push(widget: const Login(), context: context);
-    } else {
-      print("Sign up failed");
+    if (_email.text.isEmpty) {
+      _showSnackbar("Please enter your email");
+      return;
+    }
+
+    if (_phone.text.isEmpty) {
+      _showSnackbar("Please enter your phone");
+      return;
+    }
+
+    if (_password.text.isEmpty) {
+      _showSnackbar("Please enter your password");
+      return;
+    }
+
+    // Validate email format
+    if (!RegExp(r"^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email) &&
+        _email.text.isNotEmpty) {
+      _showSnackbar("Invalid email format");
+      return;
+    }
+
+    // Validate password length
+    if (password.length < 6 && _password.text.isNotEmpty) {
+      _showSnackbar("Password must be at least 6 characters long");
+      return;
+    }
+
+    // Show CircularProgressIndicator while signing up
+    showLoadingDialog();
+
+    try {
+      // Attempt to sign up
+      User? user = await _auth.signUpWithEmailandPassword(email, password);
+
+      // Close the CircularProgressIndicator
+      Navigator.of(context).pop();
+
+      // Delay execution for a moment to ensure CircularProgressIndicator is dismissed
+      await Future.delayed(Duration(milliseconds: 300));
+
+      if (user != null) {
+        print("Sign up successful");
+
+        // Show success Snackbar
+        _showSnackbar("User successfully signed up");
+
+        // Navigate to the other screen after Snackbar is displayed
+        Future.delayed(Duration(seconds: 2), () {
+          FirebaseAuth.instance.signOut();
+          Routes.instance.push(widget: const Login(), context: context);
+        });
+      } else {
+        print("Sign up failed");
+      }
+    } catch (e) {
+      // Close the CircularProgressIndicator
+      Navigator.of(context).pop();
+
+      // Check the specific exception for email already in use
+      if (e is FirebaseAuthException && e.code == 'email-already-in-use') {
+        _showSnackbar("Email is already in use");
+      } else {
+        // Check if the message contains the reCAPTCHA token warning
+        String errorMessage = e.toString();
+        if (errorMessage.contains("Creating user with empty reCAPTCHA token")) {
+          _showSnackbar("Failed to create user. Please try again.");
+        } else {
+          _showSnackbar("Sign up failed");
+        }
+      }
     }
   }
 }

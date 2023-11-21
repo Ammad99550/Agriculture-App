@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 // import 'package:youtube_ecommerce/screens/account_screen/account_screens.dart';
 // import 'package:youtube_ecommerce/screens/cart_screen/cart_screen.dart';
-// import 'package:youtube_ecommerce/screens/home/home.dart';
+import 'package:agriculture_management/screens/home/home.dart';
 // import 'package:youtube_ecommerce/screens/order_screen/order_screen.dart';
 
 class CustomBottomBar extends StatefulWidget {
@@ -21,12 +21,10 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
   final bool _hideNavBar = false;
 
   List<Widget> _buildScreens() => [
-        // const Home(),
+        const Home(),
         // const CartScreen(),
         // const OrderScreen(),
         // const AccountScreen(),
-
-        DummyScreen(),
         DummyScreen2(),
         DummyScreen3(),
         DummyScreen4(),

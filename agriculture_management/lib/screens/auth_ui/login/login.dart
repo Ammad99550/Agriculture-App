@@ -1,15 +1,15 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:agriculture_management/screens/custom_bottom_bar/custom_bottom_bar.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-//import 'package:agriculture_management/constants/constants.dart';
+import 'package:agriculture_management/constants/constants.dart';
 import 'package:agriculture_management/constants/routes.dart';
 import 'package:agriculture_management/firebase_helper/firebase_auth_services.dart';
 import 'package:agriculture_management/screens/auth_ui/sign_up/sign_up.dart';
 import 'package:agriculture_management/widgets/primary_button/primary_button.dart';
 import 'package:agriculture_management/widgets/top_titles/top_titles.dart';
+
+import '../../custom_bottom_bar/custom_bottom_bar.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -19,20 +19,11 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  final FirebaseAuthService _auth = FirebaseAuthService();
-
-  TextEditingController _email = TextEditingController();
-  TextEditingController _password = TextEditingController();
+  TextEditingController email = TextEditingController();
+  TextEditingController password = TextEditingController();
 
   bool isShowPassword = true;
-
   @override
-  void dispose() {
-    _password.dispose();
-    _email.dispose();
-    super.dispose();
-  }
-
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
@@ -42,12 +33,12 @@ class _LoginState extends State<Login> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const TopTitles(
-                  subtitle: "Welcome Back To Agricultural App", title: "Login"),
+                  subtitle: "Welcome Back To E Commerce App", title: "Login"),
               const SizedBox(
                 height: 46.0,
               ),
               TextFormField(
-                controller: _email,
+                controller: email,
                 decoration: const InputDecoration(
                   hintText: "E-mail",
                   prefixIcon: Icon(
@@ -59,7 +50,7 @@ class _LoginState extends State<Login> {
                 height: 12.0,
               ),
               TextFormField(
-                controller: _password,
+                controller: password,
                 obscureText: isShowPassword,
                 decoration: InputDecoration(
                   hintText: "Password",
@@ -86,7 +77,17 @@ class _LoginState extends State<Login> {
               ),
               PrimaryButton(
                 title: "Login",
-                onPressed: _signIn,
+                onPressed: () async {
+                  bool isVaildated = loginVaildation(email.text, password.text);
+                  if (isVaildated) {
+                    bool isLogined = await FirebaseAuthHelper.instance
+                        .login(email.text, password.text, context);
+                    if (isLogined) {
+                      Routes.instance.pushAndRemoveUntil(
+                          widget: const CustomBottomBar(), context: context);
+                    }
+                  }
+                },
               ),
               const SizedBox(
                 height: 24.0,
@@ -110,61 +111,6 @@ class _LoginState extends State<Login> {
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  void _showCircularProgress() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Center(
-          child: CircularProgressIndicator(),
-        );
-      },
-    );
-  }
-
-  void _signIn() async {
-    String email = _email.text;
-    String password = _password.text;
-
-    try {
-      // Show circular progress indicator
-      _showCircularProgress();
-
-      User? user = await _auth.signInWithEmailandPassword(email, password);
-
-      if (user != null) {
-        print("Login successful");
-
-        // Delay for a few seconds before hiding the progress indicator
-        await Future.delayed(Duration(seconds: 2));
-
-        // Hide the circular progress indicator
-        Navigator.of(context).pop();
-
-        // Uncomment the navigation part if needed
-        Routes.instance.pushAndRemoveUntil(
-            widget: const CustomBottomBar(), context: context);
-      } else {
-        print("Login failed");
-        _showSnackBar("Incorrect email or password");
-      }
-    } catch (e) {
-      print("Error during login: $e");
-      _showSnackBar("An error occurred. Please try again.");
-
-      // Hide the circular progress indicator in case of an error
-      Navigator.of(context).pop();
-    }
-  }
-
-  void _showSnackBar(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        duration: Duration(seconds: 3),
       ),
     );
   }

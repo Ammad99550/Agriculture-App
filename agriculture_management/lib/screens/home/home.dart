@@ -208,7 +208,7 @@ class _HomeState extends State<Home> {
                                           Text(
                                               "Price: \$${singleProduct.price}"),
                                           const SizedBox(
-                                            height: 30.0,
+                                            height: 15.0,
                                           ),
                                           SizedBox(
                                             height: 45,

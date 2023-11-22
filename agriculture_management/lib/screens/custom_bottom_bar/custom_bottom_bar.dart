@@ -1,5 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api
 
+import 'package:agriculture_management/screens/cart_screen/cart_screen.dart';
+import 'package:agriculture_management/screens/order_screen/order_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 // import 'package:youtube_ecommerce/screens/account_screen/account_screens.dart';
@@ -22,11 +24,9 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
 
   List<Widget> _buildScreens() => [
         const Home(),
-        // const CartScreen(),
-        // const OrderScreen(),
+        const CartScreen(),
+        const OrderScreen(),
         // const AccountScreen(),
-        DummyScreen2(),
-        DummyScreen3(),
         DummyScreen4(),
       ];
 

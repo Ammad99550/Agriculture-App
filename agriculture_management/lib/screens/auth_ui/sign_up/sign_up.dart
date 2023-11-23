@@ -4,7 +4,6 @@ import 'package:agriculture_management/screens/auth_ui/login/login.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:agriculture_management/constants/routes.dart';
-import 'package:agriculture_management/screens/custom_bottom_bar/custom_bottom_bar.dart';
 import 'package:agriculture_management/widgets/primary_button/primary_button.dart';
 import 'package:agriculture_management/widgets/top_titles/top_titles.dart';
 
@@ -35,7 +34,7 @@ class _SignUpState extends State<SignUp> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const TopTitles(
-                  subtitle: "Welcome Back To E Commerce App",
+                  subtitle: "Welcome Back To E Farm App",
                   title: "Create Account"),
               const SizedBox(
                 height: 46.0,

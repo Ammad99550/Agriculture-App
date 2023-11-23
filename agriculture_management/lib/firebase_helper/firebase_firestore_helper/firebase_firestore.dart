@@ -31,14 +31,40 @@ class FirebaseFirestoreHelper {
 
   Future<List<ProductModel>> getBestProducts() async {
     try {
-      QuerySnapshot<Map<String, dynamic>> querySnapshot =
-          await _firebaseFirestore.collectionGroup("products").get();
+      // QuerySnapshot<Map<String, dynamic>> querySnapshot =
+      //     await _firebaseFirestore.collectionGroup("products").get();
 
-      List<ProductModel> productModelList = querySnapshot.docs
-          .map((e) => ProductModel.fromJson(e.data()))
-          .toList();
+      // List<ProductModel> productModelList = querySnapshot.docs
+      //     .map((e) => ProductModel.fromJson(e.data()))
+      //     .toList();
+      // Get all categories
+      QuerySnapshot<Map<String, dynamic>> categorySnapshot =
+          await _firebaseFirestore.collection("categories").get();
 
-      return productModelList;
+      List<ProductModel> firstProducts = [];
+
+      // For each category, get the first product
+      for (QueryDocumentSnapshot<Map<String, dynamic>> categoryDoc
+          in categorySnapshot.docs) {
+        String categoryId = categoryDoc.id;
+
+        // Get the first product for the category
+        QuerySnapshot<Map<String, dynamic>> productSnapshot =
+            await _firebaseFirestore
+                .collection("categories")
+                .doc(categoryId)
+                .collection("products")
+                .limit(1)
+                .get();
+
+        if (productSnapshot.docs.isNotEmpty) {
+          ProductModel productModel =
+              ProductModel.fromJson(productSnapshot.docs.first.data());
+          firstProducts.add(productModel);
+        }
+      }
+
+      return firstProducts;
     } catch (e) {
       showMessage(e.toString());
       return [];

@@ -16,6 +16,7 @@ void main() async {
 
   await Firebase.initializeApp(
     options: FirebaseOptions(
+        storageBucket: "agricultureapp-90cbf.appspot.com",
         apiKey: "AIzaSyAhghybvpJf91dby0w18Lkkm_MVCvq-jZE",
         appId: "1:167517423961:android:b4643f11c4b99a0f446448",
         messagingSenderId: "167517423961",
@@ -42,9 +43,9 @@ class MainApp extends StatelessWidget {
         home: StreamBuilder(
           stream: FirebaseAuthHelper.instance.getAuthChange,
           builder: (context, snapshot) {
-            // if (snapshot.hasData) {
-            //   return const CustomBottomBar();
-            // }
+            if (snapshot.hasData) {
+              return const CustomBottomBar();
+            }
             return const Welcome();
           },
         ),

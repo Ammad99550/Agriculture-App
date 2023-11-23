@@ -4,7 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 void showMessage(String message) {
   Fluttertoast.showToast(
     msg: message,
-    backgroundColor: Colors.red,
+    backgroundColor: Colors.green,
     textColor: Colors.white,
     fontSize: 16.0,
   );
@@ -19,14 +19,17 @@ showLoaderDialog(BuildContext context) {
           mainAxisSize: MainAxisSize.min,
           children: [
             const CircularProgressIndicator(
-              color: Color(0xffe16555),
+              color: Colors.green,
             ),
             const SizedBox(
               height: 18.0,
             ),
             Container(
                 margin: const EdgeInsets.only(left: 7),
-                child: const Text("Loading...")),
+                child: const Text(
+                  "Loading...",
+                  style: TextStyle(color: Colors.green),
+                )),
           ],
         ),
       );
@@ -45,7 +48,7 @@ String getMessageFromErrorCode(String errorCode) {
   switch (errorCode) {
     case "ERROR_EMAIL_ALREADY_IN_USE":
       return "Email already used. Go to login page.";
-    case "account-exists-with-different-credential":
+    case "account-exists-with-different-cgreenential":
       return "Email already used. Go to login page.";
     case "email-already-in-use":
       return "Email already used. Go to login page.";

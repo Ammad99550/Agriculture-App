@@ -37,9 +37,9 @@ class UserModel {
     image,
   }) =>
       UserModel(
-        id: id ?? '',
+        id: id,
         name: name ?? this.name,
-        email: email ?? '',
+        email: email,
         image: image ?? this.image,
       );
 }

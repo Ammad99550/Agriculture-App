@@ -37,6 +37,7 @@ class _HomeState extends State<Home> {
     });
     FirebaseFirestoreHelper.instance.updateTokenFromFirebase();
     categoriesList = await FirebaseFirestoreHelper.instance.getCategories();
+
     productModelList = await FirebaseFirestoreHelper.instance.getBestProducts();
 
     productModelList.shuffle();
@@ -206,7 +207,7 @@ class _HomeState extends State<Home> {
                                             ),
                                           ),
                                           Text(
-                                              "Price: \$${singleProduct.price}"),
+                                              "Price: \$.${singleProduct.price}"),
                                           const SizedBox(
                                             height: 15.0,
                                           ),

@@ -1,13 +1,9 @@
-// ignore_for_file: library_private_types_in_public_api
-
+import 'package:agriculture_management/screens/account_screen/account_screens.dart';
 import 'package:agriculture_management/screens/cart_screen/cart_screen.dart';
 import 'package:agriculture_management/screens/order_screen/order_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
-// import 'package:youtube_ecommerce/screens/account_screen/account_screens.dart';
-// import 'package:youtube_ecommerce/screens/cart_screen/cart_screen.dart';
 import 'package:agriculture_management/screens/home/home.dart';
-// import 'package:youtube_ecommerce/screens/order_screen/order_screen.dart';
 
 class CustomBottomBar extends StatefulWidget {
   const CustomBottomBar({
@@ -24,10 +20,12 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
 
   List<Widget> _buildScreens() => [
         const Home(),
-        const CartScreen(),
-        const OrderScreen(),
+        // const CartScreen(),
+        // const OrderScreen(),
         // const AccountScreen(),
-        DummyScreen4(),
+        DummyScreen1(),
+        DummyScreen2(),
+        DummyScreen3(),
       ];
 
   List<PersistentBottomNavBarItem> _navBarsItems() => [
@@ -90,30 +88,44 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
       );
 }
 
-class DummyScreen extends StatelessWidget {
+class DummyScreen1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(); // Replace YourWidgetTree() with your desired widget tree
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Dummy Screen 1"),
+      ),
+      body: Center(
+        child: Text('This is the Dummy Screen.'),
+      ),
+    );
   }
 }
 
 class DummyScreen2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(); // Replace YourWidgetTree() with your desired widget tree
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Dummy Screen 2"),
+      ),
+      body: Center(
+        child: Text('This is the Dummy Screen.'),
+      ),
+    );
   }
 }
 
 class DummyScreen3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(); // Replace YourWidgetTree() with your desired widget tree
-  }
-}
-
-class DummyScreen4 extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(); // Replace YourWidgetTree() with your desired widget tree
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Dummy Screen 3"),
+      ),
+      body: Center(
+        child: Text('This is the Dummy Screen.'),
+      ),
+    );
   }
 }

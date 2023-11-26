@@ -122,9 +122,10 @@ class _AccountScreenState extends State<AccountScreen> {
                 ),
                 ListTile(
                   onTap: () async {
-                    FirebaseAuthHelper.instance.signOut();
                     showLoaderDialog(context);
                     await Future.delayed(Duration(seconds: 2));
+                    Navigator.of(context, rootNavigator: true).pop();
+                    FirebaseAuthHelper.instance.signOut();
                     Navigator.of(context, rootNavigator: true)
                         .pushAndRemoveUntil(
                       MaterialPageRoute(

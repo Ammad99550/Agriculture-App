@@ -20,12 +20,9 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
 
   List<Widget> _buildScreens() => [
         const Home(),
-        // const CartScreen(),
-        // const OrderScreen(),
-        // const AccountScreen(),
-        DummyScreen1(),
-        DummyScreen2(),
-        DummyScreen3(),
+        const CartScreen(),
+        const OrderScreen(),
+        const AccountScreen(),
       ];
 
   List<PersistentBottomNavBarItem> _navBarsItems() => [
@@ -86,46 +83,4 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
               NavBarStyle.style1, // Choose the nav bar style with this property
         ),
       );
-}
-
-class DummyScreen1 extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Dummy Screen 1"),
-      ),
-      body: Center(
-        child: Text('This is the Dummy Screen.'),
-      ),
-    );
-  }
-}
-
-class DummyScreen2 extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Dummy Screen 2"),
-      ),
-      body: Center(
-        child: Text('This is the Dummy Screen.'),
-      ),
-    );
-  }
-}
-
-class DummyScreen3 extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Dummy Screen 3"),
-      ),
-      body: Center(
-        child: Text('This is the Dummy Screen.'),
-      ),
-    );
-  }
 }

@@ -26,31 +26,6 @@ class Welcome extends StatelessWidget {
                 AssetsImages.instance.farmLogo,
               ),
             ),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   children: [
-            //     CupertinoButton(
-            //       onPressed: () {},
-            //       padding: EdgeInsets.zero,
-            //       child: const Icon(
-            //         Icons.facebook,
-            //         size: 35,
-            //         color: Colors.blue,
-            //       ),
-            //     ),
-            //     const SizedBox(
-            //       width: 12.0,
-            //     ),
-            //     CupertinoButton(
-            //       onPressed: () {},
-            //       padding: EdgeInsets.zero,
-            //       child: Image.asset(
-            //         AssetsImages.instance.googleLogo,
-            //         scale: 30.0,
-            //       ),
-            //     ),
-            //   ],
-            // ),
             const SizedBox(
               height: 30.0,
             ),

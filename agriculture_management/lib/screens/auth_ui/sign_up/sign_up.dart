@@ -110,6 +110,10 @@ class _SignUpState extends State<SignUp> {
                     bool isLogined = await FirebaseAuthHelper.instance
                         .signUp(name.text, email.text, password.text, context);
                     if (isLogined) {
+                      showLoaderDialog(context);
+                      await Future.delayed(Duration(seconds: 2));
+                      Navigator.of(context, rootNavigator: true).pop();
+                      FirebaseAuthHelper.instance.signOut();
                       Routes.instance
                           .push(widget: const Login(), context: context);
                     }

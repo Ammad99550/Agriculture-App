@@ -14,6 +14,7 @@ void main() async {
   Stripe.publishableKey =
       "pk_test_51MWx8OAVMyklfe3CsjEzA1CiiY0XBTlHYbZ8jQlGtVFIwQi4aNeGv8J1HUw4rgSavMTLzTwgn0XRlwoTVRFXyu2h00mRUeWmAf";
 
+  //initilization of Firebase app
   await Firebase.initializeApp(
     options: FirebaseOptions(
         storageBucket: "agricultureapp-90cbf.appspot.com",
@@ -22,9 +23,6 @@ void main() async {
         messagingSenderId: "167517423961",
         projectId: "agricultureapp-90cbf"),
   );
-  //initilization of Firebase app
-
-  // other Firebase service initialization
 
   runApp(const MainApp());
 }
